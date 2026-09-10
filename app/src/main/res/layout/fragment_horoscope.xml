@@ -9,8 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHoroscope"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="110dp"/>
+        android:layout_height="match_parent"/>
     
 
 </FrameLayout>

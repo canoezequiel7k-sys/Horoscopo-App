@@ -22,7 +22,7 @@ class HoroscopeDetailViewModel @Inject constructor(private val getPredictionUseC
 
     fun getHoroscope(sign: HoroscopeModel){
         horoscope = sign
-        //Para lanzar una coroutine en viewModel (El hilo que le asignamos, se lo asignamos a todo su contenido)
+        //Para lanzar una coroutine en viewModel (El hilo que le asignamos, se lo asignamos all su contenido)
         viewModelScope.launch {
             _state.value = HoroscopeDetailState.Loading
             //hilo principal
