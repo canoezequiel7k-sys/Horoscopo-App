@@ -55,17 +55,16 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView
-            android:id="@+id/ivLockyCard"
+            android:id="@+id/ivLuckyCard"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/red"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHeight_percent="0.6"
             />
         <TextView
-            android:id="@+id/tvLocky"
+            android:id="@+id/tvLucky"
             android:layout_width="0dp"
             android:layout_height="0dp"
             tools:text="Hello world, its a text of test style do text :D!!"
@@ -75,7 +74,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/tvShare"
-            app:layout_constraintTop_toBottomOf="@id/ivLockyCard"
+            app:layout_constraintTop_toBottomOf="@id/ivLuckyCard"
             />
 
         <TextView
@@ -89,7 +88,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvLocky"
+            app:layout_constraintTop_toBottomOf="@id/tvLucky"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

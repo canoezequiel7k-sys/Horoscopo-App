@@ -1,6 +1,7 @@
 package com.cursokotlin.horoscapp.ui.luck
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -15,8 +16,10 @@ import androidx.core.view.isVisible
 import com.cursokotlin.horoscapp.R
 import com.cursokotlin.horoscapp.databinding.ActivityMainBinding
 import com.cursokotlin.horoscapp.databinding.FragmentLuckBinding
+import com.cursokotlin.horoscapp.ui.providers.RandomCardProvider
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Random
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class LuckFragment : Fragment() {
@@ -24,6 +27,9 @@ class LuckFragment : Fragment() {
 
     private var _binding: FragmentLuckBinding? = null
     private val binding get() = _binding!!
+    //Injectando una clase, esto me lo provee daggerHilt gracias al @AndroidEntryPoint
+    @Inject
+    lateinit var randomCardProvider: RandomCardProvider
 
     //Aca LLamar a nuestro metodo inicial
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -32,8 +38,38 @@ class LuckFragment : Fragment() {
     }
 
     private fun initUI() {
+        //Vamos diciendole que vaya preparando la prediccion
+        PreparePrediction()
         //Creo la funcion que escucha
         initListeners()
+    }
+
+    private fun PreparePrediction() {
+        val currentLuck = randomCardProvider.getLucky()
+        //All lo que haga aca adentro, me asegura que no es null, devuelve un luckyModel no nulable
+        currentLuck?.let {luck ->
+            //Guardamos el valor del.text
+            val currentPrediction = getString(luck.text)
+            //convierte el ID numérico en la frase traducida del @strings
+            binding.tvLucky.text = currentPrediction
+            //convierte el ID numérico en la frase traducida del @drawable
+            binding.ivLuckyCard.setImageResource(luck.image)
+            //Convertir nuestro tvShare en clickeable
+            binding.tvShare.setOnClickListener { shareResult(currentPrediction) }
+        }
+    }
+
+    private fun shareResult(prediction: String, ) {
+        //vas a crear un valor tipo intent pero antes vas aplicarle unos atributos
+        val sendIntent: Intent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, prediction)
+            type = "text/plain"
+        }
+        //Chooser es el seleccionador, el apartado que te muestra a que app mandarlo
+        val shareIntent = Intent.createChooser(sendIntent, null)
+        startActivity(shareIntent)
+
     }
 
     private fun initListeners() {
