@@ -1,6 +1,7 @@
 package com.cursokotlin.horoscapp.ui.luck
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -16,6 +17,7 @@ import androidx.core.view.isVisible
 import com.cursokotlin.horoscapp.R
 import com.cursokotlin.horoscapp.databinding.ActivityMainBinding
 import com.cursokotlin.horoscapp.databinding.FragmentLuckBinding
+import com.cursokotlin.horoscapp.ui.core.listeners.OnSwipeTouchListener
 import com.cursokotlin.horoscapp.ui.providers.RandomCardProvider
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Random
@@ -72,9 +74,21 @@ class LuckFragment : Fragment() {
 
     }
 
+
+    @SuppressLint("ClickableViewAccessibility") //Le estoy diciendo que ignore el warning
     private fun initListeners() {
         //Hacemos el clickable y que llame a la funcion que gira la ruleta
-        binding.ivRulete.setOnClickListener { spinRoulette() }
+        //binding.ivRulete.setOnClickListener { spinRoulette() }
+
+        binding.ivRulete.setOnTouchListener ( object: OnSwipeTouchListener(requireContext()){
+            override fun onSwipeRight() {
+                spinRoulette()
+            }
+
+            override fun onSwipeLeft() {
+                spinRoulette()
+            }
+        })
     }
 
     private fun spinRoulette() {
