@@ -2,7 +2,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
+
+    <!-- Permiso de internet -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Permiso de Camara -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- Permiso de Camara, con el punto any incluyo camara de adelante y de atras -->
+    <uses-feature android:name="android.hardware.camera.any" />
+
 
     <application
         android:name=".HoroscoApp"
