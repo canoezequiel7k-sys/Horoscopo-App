@@ -1,13 +1,17 @@
 package com.cursokotlin.horoscapp.ui.palmistry
 
-import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
 import androidx.core.content.PermissionChecker
 import com.cursokotlin.horoscapp.databinding.FragmentPalmistryBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,7 +33,7 @@ class PalmistryFragment : Fragment() {
     ){isGranted ->
         if (isGranted){
             //Lo acepta
-            //starCamera
+            starCamera()
         }else{
             //No lo acepta
             Toast.makeText(requireContext(), "Acepta los permisos para poder disfrutar una experiencia magica", Toast.LENGTH_LONG).show()
@@ -41,13 +45,45 @@ class PalmistryFragment : Fragment() {
         //comprobar que tiene permise
         if (checkCameraPermission()){
             //Tiene permisos aceptados
-            //starCamera
+            starCamera()
         }else{
             //Lanzate con el permiso de la camara
             requestPermissionLauncher.launch(CAMERA_PERMISSION)
         }
 
     }
+
+
+    //Funcion para usar la camara
+    private fun starCamera(){
+        //es igual a un proceso de camara provider que requiere el contexto GESTOR DE CAMARA, nos permite que el ciclo de vida se enganche
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+
+        cameraProviderFuture.addListener({
+            //El get esta creando ese futuro provider, se engancha al ciclo de vida
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            val preview = Preview.Builder()
+                .build()
+                .also {
+                    //Y ademas accede a la vista viewFinder
+                    it.setSurfaceProvider(binding.viewFinder.surfaceProvider)
+                }
+            //Seleccionamos la camara que queremos por defecto
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
+            try {
+                //Que se desvindee de lo que tenia antes
+                cameraProvider.unbindAll()
+
+                cameraProvider.bindToLifecycle(this, cameraSelector, preview)
+
+            }catch (e: Exception){
+                Log.e("Ari", "Algo se rompio ${e.message}")
+            }
+        }, ContextCompat.getMainExecutor(requireContext()))
+
+    }
+
 
     //Funcion que verifique si tiene permiso, esto va a devolver un Boolean
     private fun checkCameraPermission(): Boolean {
