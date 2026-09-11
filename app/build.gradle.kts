@@ -85,7 +85,19 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.material)
+
+    //Librerias de TESTING
+
+
+
+
+    //-----Libreria que solo funciona en el directorio test
     testImplementation(libs.junit)
+    testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
+    //Libreria que nos permite mockear
+    testImplementation("io.mockk:mockk:1.12.3")
+
+    //-----Libreria que solo funciona en el directorio androidTest
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)
 }
