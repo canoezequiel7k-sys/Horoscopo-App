@@ -26,7 +26,7 @@ class HoroscopeDetailViewModel @Inject constructor(private val getPredictionUseC
         viewModelScope.launch {
             _state.value = HoroscopeDetailState.Loading
             //hilo principal
-            val result = withContext(Dispatchers.IO){getPredictionUseCase(sign.name)} //Hilo secundario
+            val result = withContext(Dispatchers.IO){getPredictionUseCase(sign.name.lowercase())} //Hilo secundario
             //hilo principal
             if (result != null){
                 _state.value = HoroscopeDetailState.Success(result.horoscope, result.sign, horoscope)

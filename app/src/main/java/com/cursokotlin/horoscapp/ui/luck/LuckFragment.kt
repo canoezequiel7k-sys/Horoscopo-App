@@ -82,9 +82,8 @@ class LuckFragment : Fragment() {
 
         binding.ivRulete.setOnTouchListener ( object: OnSwipeTouchListener(requireContext()){
 
-            override fun onSwipeLeft() {
-                spinRoulette()
-            }
+            override fun onSwipeLeft() { spinRoulette() }
+            override fun onSwipeRight() { spinRoulette() }
         })
     }
 

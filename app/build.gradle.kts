@@ -17,7 +17,11 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        //Este test viene por defecto, funciona cuando tienes test sencillos
+        //testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        //customRunner
+        testInstrumentationRunner = "com.cursokotlin.horoscapp.CustomTestRunner"
     }
 
     buildTypes {
@@ -35,7 +39,8 @@ android {
         getByName("debug"){
             isDebuggable = true
             resValue("string", "ariname", "[DEBUG]HoroscApp")
-            buildConfigField("String", "BASE_URL", "\"https://newastro-debug.vercel.app/\"")
+            //buildConfigField("String", "BASE_URL", "\"https://newastro-debug.vercel.app/\"")
+            buildConfigField("String", "BASE_URL", "\"https://newastro.vercel.app/\"")
         }
 
     }
@@ -88,9 +93,6 @@ dependencies {
 
     //Librerias de TESTING
 
-
-
-
     //-----Libreria que solo funciona en el directorio test
     testImplementation(libs.junit)
     testImplementation("io.kotlintest:kotlintest-runner-junit5:3.4.2")
@@ -98,6 +100,12 @@ dependencies {
     testImplementation("io.mockk:mockk:1.12.3")
 
     //-----Libreria que solo funciona en el directorio androidTest
-    androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.junit)
+    //UI Testing
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
+    androidTestImplementation("androidx.test.espresso:espresso-intents:3.4.0")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.51.1")
+    androidTestImplementation("androidx.fragment:fragment-testing:1.6.1")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.51.1")
 }
